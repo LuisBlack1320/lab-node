@@ -1,0 +1,26 @@
+version: '3'
+services:
+  node-docker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: "node-docker"
+    command: npm start
+    volumes:
+      - .:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo-docker
+
+  mongo-docker:
+    image: mongo:4.4.6
+    container_name: "mongo-docker"
+    volumes:
+      - ./data:/data/db
+      - ./:/app
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_HOST=mongo
+
